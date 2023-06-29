@@ -1,4 +1,4 @@
-package com.mikke.minhasfinancas.model.entity;
+package com.mikke.minhasfinancas.model.enums;
 
 public enum TipoLancamento {
 	
