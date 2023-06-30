@@ -1,16 +1,22 @@
 package com.mikke.minhasfinancas.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.mikke.minhasfinancas.exception.RegraDeNegocioException;
 import com.mikke.minhasfinancas.model.entity.Usuario;
 import com.mikke.minhasfinancas.model.repository.UsuarioRepository;
 import com.mikke.minhasfinancas.service.UsuarioService;
 
+@Service
 public class UsuarioServiceImpl implements UsuarioService{
 
-	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioRepository repository;
 	
-	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+	@Autowired
+	public UsuarioServiceImpl(UsuarioRepository repository) {
 		super();
-		this.usuarioRepository = usuarioRepository;
+		this.repository = repository;
 	}
 	
 	@Override
@@ -27,7 +33,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void validarEmail(String email) {
-		// TODO Auto-generated method stub
+		boolean existe = this.repository.existsByEmail(email);
+		if(existe){
+			throw new RegraDeNegocioException("Este existe um cadastro com este e-mail!");
+		}
 		
 	}
 

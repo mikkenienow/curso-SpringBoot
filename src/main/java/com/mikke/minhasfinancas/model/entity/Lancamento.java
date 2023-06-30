@@ -12,12 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-
 import com.mikke.minhasfinancas.model.enums.StatusLancamento;
 import com.mikke.minhasfinancas.model.enums.TipoLancamento;
-
 import lombok.Builder;
 import lombok.Data;
 
