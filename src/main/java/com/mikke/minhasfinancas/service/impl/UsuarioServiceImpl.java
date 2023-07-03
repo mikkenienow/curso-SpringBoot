@@ -1,8 +1,12 @@
 package com.mikke.minhasfinancas.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mikke.minhasfinancas.exception.ErroAutenticacao;
 import com.mikke.minhasfinancas.exception.RegraDeNegocioException;
 import com.mikke.minhasfinancas.model.entity.Usuario;
 import com.mikke.minhasfinancas.model.repository.UsuarioRepository;
@@ -22,8 +26,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	public Usuario autenticar(String email, String senha) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Usuario> usuario = repository.findByEmail(email);
+		
+		if(!usuario.isPresent()) {
+			throw new ErroAutenticacao("Nenhum cadastro foi encontrado para o e-mail fornecido!");
+		}
+		
+		if(!usuario.get().getSenha().equals(senha)) {
+			throw new ErroAutenticacao("A senha digitada está incorreta!");
+		}
+		
+		return usuario.get();
 	}
 
 	@Override
@@ -32,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		validarEmail(usuario.getEmail());
 		return repository.save(usuario);
 	}
-
+	
 	@Override
 	public void validarEmail(String email) {
 		boolean existe = this.repository.existsByEmail(email);
