@@ -2,6 +2,7 @@ package com.mikke.minhasfinancas.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.mikke.minhasfinancas.exception.RegraDeNegocioException;
 import com.mikke.minhasfinancas.model.entity.Usuario;
 import com.mikke.minhasfinancas.model.repository.UsuarioRepository;
@@ -26,9 +27,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
+	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+		validarEmail(usuario.getEmail());
+		return repository.save(usuario);
 	}
 
 	@Override
