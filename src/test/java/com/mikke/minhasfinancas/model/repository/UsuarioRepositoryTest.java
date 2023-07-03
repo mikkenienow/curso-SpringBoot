@@ -19,8 +19,6 @@ public class UsuarioRepositoryTest {
 	public void deveLancarErroAoValidarEmailJaCadastrado() {
 
 			Usuario usuario = Usuario.builder().nome("usuario").email("Usuario@email.com").senha("123456").build();
-			System.out.println(usuario.getEmail());
-			System.out.println(usuario.getNome());
 			repository.save(usuario);
 			boolean result = repository.existsByEmail("Usuario@email.com");
 			Assertions.assertThat(result).isTrue();
